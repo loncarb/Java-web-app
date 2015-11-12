@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <h:form >
+                <p:menubar id="sluzbenik" rendered="#{mBSesija.menuForSluzbenik()}">
+                    <p:submenu label="#{text.menu_studenti}">
+                        <p:menuitem value="#{text.menu_studenti_novi_student}" action="/zaSluzbenika/unosNovogStudenta.xhtml"  ajax="false"  />
+                        <p:menuitem value="#{text.menu_studenti_nadji_studenta}" action="/zaSluzbenika/pretragaStudenata.xhtml"  ajax="false"  />
+                    </p:submenu>
+
+                    <p:submenu label="#{text.menu_ispiti}">
+                        <p:menuitem value="#{text.menu_ispiti_novi_ispit}" action="/zaSluzbenika/unosNovogIspita.xhtml"  ajax="false"  />
+                        <p:menuitem value="#{text.menu_ispiti_novi_smer}" action="/zaSluzbenika/unosNovogSmera.xhtml"  ajax="false"  />
+                    </p:submenu>
+                </p:menubar>
+
+                <p:menubar id="student" rendered="#{mBSesija.menuForStudent()}">
+                    <p:menuitem value="#{text.menu_prijavi_ispit}" action="/zaStudenta/prijavaIspita.xhtml"  ajax="false"  />
+                    <p:menuitem value="#{text.menu_polozeni_ispiti}" action="/zaStudenta/polozeniIspiti.xhtml"  ajax="false"  />
+                </p:menubar>
+            </h:form>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <h:form>            
+                <p:menubar id="logOut">
+                    <p:menuitem> 
+                        <p:commandButton value="#{text.logOut}" ajax="false" action="#{mBSesija.logOut()}"/> 
+                    </p:menuitem>
+                </p:menubar>
+            </h:form>
+        </div>
+
+    </h:body>
+
+</html>

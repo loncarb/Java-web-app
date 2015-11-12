@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Novi smer</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form id="frmNoviSmer" >
+                    <h:panelGrid id="pnlgIzmena"  columns="2">
+                        <h:outputText value="#{text.smer_id}"/>
+                        <h:inputText value="#{mBSmer.smer.smerID}" />
+
+                        <h:outputText value="#{text.smer_naziv}" rendered="#{mBSmer.button()}"/>
+                        <h:inputText value="#{mBSmer.smer.naziv}" rendered="#{mBSmer.button()}"/>
+                    </h:panelGrid>
+
+
+                    <p:outputLabel value="#{text.smer_prva_godina}" rendered="#{mBSmer.text1()}"/>
+                    <p:outputLabel value="#{text.smer_druga_godina}" rendered="#{mBSmer.text2()}"/>
+                    <p:outputLabel value="#{text.smer_treca_godina}" rendered="#{mBSmer.text3()}"/>
+                    <p:outputLabel value="#{text.smer_cetvrta_godina}" rendered="#{mBSmer.text4()}"/>
+                    <p:dataTable value="#{mBSmer.listaPredmeta}" var="predmet" 
+                                 selection="#{mBSmer.predmet}" 
+                                 rowKey="#{predmet.predmetID}" selectionMode="single"        
+                                 >
+                        <p:column headerText="">
+                            <p:selectBooleanButton offLabel="" onLabel="" value="#{predmet.promenljiva}" 
+                                                   onIcon="ui-icon-check" offIcon="ui-icon-close"></p:selectBooleanButton>
+                            <input type="checkbox" />
+                        </p:column>
+                        <p:column headerText="#{text.ispit_id}">
+                            #{predmet.predmetID}
+                        </p:column>
+                        <p:column headerText="#{text.ispit_naziv}">
+                            #{predmet.naziv}
+                        </p:column>
+                        <p:column headerText="#{text.ispit_ESPB}">
+                            #{predmet.espb}
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="#{text.smer_dalje}" ajax="false" rendered="#{!mBSmer.button()}"
+                                     action="#{mBSmer.choosePredmet()}" />
+                    <p:commandButton value="#{text.smer_sacuvaj}" ajax="false" rendered="#{mBSmer.button()}"
+                                     action="#{mBSmer.saveSmer()}" />
+                    <p:messages for="greska" rendered="#{mBSmer.greska}">#{text.greska}</p:messages>
+                    <p:messages for="uspeh" rendered="#{mBSmer.uspeh}">#{text.uspeh}</p:messages>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

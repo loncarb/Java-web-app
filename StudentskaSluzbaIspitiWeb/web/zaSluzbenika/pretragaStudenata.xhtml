@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pretraga studenata</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form id="pretraga">
+                    <h:outputText value="#{text.noviStudent_jmbg}"/>
+                    <h:inputText value="#{mBPretragaStudenata.studentZaPretragu.jmbg}" />
+
+                    <h:outputText value="#{text.noviStudent_ime}"/>
+                    <h:inputText value="#{mBPretragaStudenata.studentZaPretragu.ime}" />
+
+                    <h:outputText value="#{text.noviStudent_prezime}"/>
+                    <h:inputText value="#{mBPretragaStudenata.studentZaPretragu.prezime}" />
+
+                    <h:outputText value="#{text.noviStudent_mesto}"/>
+                    <p:selectOneMenu value="#{mBPretragaStudenata.studentZaPretragu.mesto}" 
+                                     converter="convMesto">
+                        <f:selectItems value="#{mBPretragaStudenata.listaMesta}" 
+                                       var="mesto"
+                                       itemLabel="#{mesto.naziv}"
+                                       itemValue="#{mesto}"/>
+                    </p:selectOneMenu>
+
+                    <h:commandButton value="#{text.pretraga_pretraga}"  
+                                     action="#{mBPretragaStudenata.nadjiStudenta()}" />
+                </h:form>
+                <h:form id="studenti">
+                    
+                    <p:dataTable value="#{mBPretragaStudenata.listaStudenata}" var="student" 
+                                 selection="#{mBPretragaStudenata.studentZaizmenu}" 
+                                 rowKey="#{student.jmbg}" selectionMode="single"        
+                                 >
+                        <p:column headerText="#{text.noviStudent_ime}">
+                            #{student.ime}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_prezime}">
+                            #{student.prezime}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_jmbg}">
+                            #{student.jmbg}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_brIndeksa}">
+                            #{student.brojIndeksa}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_ulica}">
+                            #{student.ulica}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_broj}">
+                            #{student.broj}
+                        </p:column>
+                        <p:column headerText="#{text.noviStudent_mesto}">
+                            #{student.mesto.naziv}
+                        </p:column>
+                        <p:column headerText="operacija">
+                            <p:commandButton value="#{text.pretraga_izmeni}" ajax="true"
+                                             action="#{mBPretragaStudenata.izmeniStudenta()}" >
+                                <f:setPropertyActionListener target="#{mBPretragaStudenata.studentZaizmenu}" 
+                                                             value="#{student}" />
+                            </p:commandButton>
+
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="#{text.pretraga_obrisi}" ajax="false"
+                                             action="#{mBPretragaStudenata.deleteStudent()}"/>
+                            <p:commandButton value="#{text.pretraga_pretraga}" ajax="false"
+                                             action="#{mBPretragaStudenata.nadjiStudenta()}"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <p:messages for="greska" rendered="#{mBPretragaStudenata.greska()}">#{text.greska}</p:messages>
+                    <p:messages for="uspeh" rendered="#{mBPretragaStudenata.uspeh()}">#{text.uspeh}</p:messages>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

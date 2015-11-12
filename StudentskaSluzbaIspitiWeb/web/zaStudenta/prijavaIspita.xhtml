@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Prijava ispita</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h:outputText value="#{text.noviStudent_mesto}"/>
+                    <p:selectOneMenu value="#{mBPrijaviIspite.izabraniIspitniRok}" 
+                                         converter="convRok">
+                        <f:selectItems value="#{mBPrijaviIspite.listaRokova}" 
+                                           var="rok"
+                                           itemLabel="#{rok.naziv}"
+                                           itemValue="#{rok}"/>
+                        </p:selectOneMenu>
+                    <p:dataTable value="#{mBPrijaviIspite.listaPredmeta}" var="predmet" 
+                                 selection="#{mBPrijaviIspite.predmet}" 
+                                 rowKey="#{predmet.predmetID}" selectionMode="single"        
+                                 >
+                        <p:column headerText="">
+                            <p:selectBooleanButton offLabel="" onLabel="" value="#{predmet.promenljiva}" 
+                                                   onIcon="ui-icon-check" offIcon="ui-icon-close"></p:selectBooleanButton>
+                        </p:column>
+                        <p:column headerText="#{text.ispit_id}">
+                            #{predmet.predmetID}
+                        </p:column>
+                        <p:column headerText="#{text.ispit_naziv}">
+                            #{predmet.naziv}
+                        </p:column>
+                        <p:column headerText="#{text.ispit_ESPB}">
+                            #{predmet.espb}
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:commandButton value="#{text.menu_prijavi_ispit}" action="#{mBPrijaviIspite.prijavi()}"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
